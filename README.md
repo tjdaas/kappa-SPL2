@@ -4,6 +4,7 @@ Depends on the following packages:
 - [pyscf]
 - [numba]
 - [numpy]
+- [scipy]
 
 To run the calculations correctly one need to have the following directory structure in the working directory:
 A/m.xyz
