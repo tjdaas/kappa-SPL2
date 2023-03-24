@@ -20,11 +20,14 @@ Input parameters to give on the command line:
 5. spin-opposite-scaling (bool)
 6. original \kappa-mp2 (bool)
 
+Issues:
+
 To do list:
 1. Try to add parallalization while using jitclass
 2. rewrite the function params as a dictionary
 3. clean up the code
 4. write proper documentation of the code
+5. change the boolean arg parse arguments to 0 (False), 1 (True) instead
 
 Future implementations:
 1. add optimization scheme on S22 to allow all combinations of \kappa's, spin scaling and mpac functionals.
