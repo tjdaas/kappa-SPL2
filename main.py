@@ -5,8 +5,8 @@ import argparse
 import os
 from numba_codes import reg_sos_mp2
 from mol import run_pyscf
-from mpac_fun import MPAC_functionals
-from constants import *
+from kappa_codes.mpac_fun import MPAC_functionals
+from kappa_codes.constants import *
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -28,15 +28,10 @@ gea_4_3=[]
 rho_3_2=[]
 gea_7_6=[]
 E_c_mp2=[]
-print("hier print ik kappa")
-print(args.kappa)
 para=params(args.kappa,args.cos,args.mpacf,args.ksam)
 kapcoslist=[]
-print(para)
 while len(para)>4 or (len(para)<3 and len(para)>0):
     kapcoslist.append(para.pop())
-print(kapcoslist)
-print(para)
 for i in range(3):
     run_mol=mols[i]
     #add here path to frag m.xyz file
@@ -74,14 +69,12 @@ for i in range(3):
         k2s=np.array(k2ss,dtype=float)
         k_os=kapcoslist[0]
         mp2OS = defs.MP2_energy_kappa_p_OS_parallel(k2s, 1)
-        print(mp2OS)
         np.savetxt("os.csv", mp2OS, delimiter=",", fmt='%s')
         #Spin scaled \kappa's
         if args.cos==False:
             mp2SS = defs.MP2_energy_kappa_p_SS_parallel(k1s, 1)
             np.savetxt("ss.csv", mp2SS, delimiter=",", fmt='%s')
             k_ss=kapcoslist[1]
-            print(mp2SS)
             E_c_kmp2_tot= mp2SS[k1ss.index(k_ss)] + mp2OS[k2ss.index(k_os)]
             E_c_mp2.append(E_c_kmp2_tot)
         else:
@@ -105,32 +98,16 @@ form_frags=MPAC_functionals(Ex[0]+Ex[1],(E_c_mp2[0]+E_c_mp2[1]),rho_4_3[0]+rho_4
 form_com=MPAC_functionals(Ex[2],E_c_mp2[2],rho_4_3[2],gea_4_3[2])
 if args.mpacf == "spl2":
     E_c_int=(ehf[2]-ehf[1]-ehf[0]+form_com.spl2(para)-form_frags.spl2(para))*kcal
-    print("slay queen")
 
 elif args.mpacf == "f1":
     E_c_int=(ehf[2]-ehf[1]-ehf[0]+form_com.f1(para)-form_frags.f1(para))*kcal
-    print("be gay do crime")
 
 elif args.mpacf == "f1ab":
     E_c_int=(ehf[2]-ehf[1]-ehf[0]+form_com.f1(para)-form_frags.f1(para))*kcal
-    print("blahaj")
 
 elif args.mpacf == "mp2":
     E_c_int=(ehf[2]-ehf[1]-ehf[0]+form_com.mp2(para)-form_frags.mp2(para))*kcal
-    print("TWAW")
 
 else:
     print("only supports: spl2, f1, f1ab and mp2")
-print(args.mpacf)
 print(E_c_int)
-#form_frags=MPAC_functionals(Ex[0]+Ex[1],E_c_mp2_os[0]+E_c_mp2_os[1]+E_c_mp2_ss[0]+E_c_mp2_ss[1],rho_4_3[0]+rho_4_3[1],gea_4_3[0]+gea_4_3[1])
-#form_com=MPAC_functionals(Ex[2],E_c_mp2_os[2]+E_c_mp2_ss[2],rho_4_3[2],gea_4_3[2])
-#E_c_int=(ehf[2]-ehf[1]-ehf[0]+form_com.spl2(0.117,10.68,1.1472,-0.7397)-form_frags.spl2(0.117,10.68,1.1472,-0.7397))*kcal
-#print(E_c_int)
-#form_com_test=MPAC_functionals(-119.559194110123,-1.59744,150.993550372695,2135.05897380807)
-#form_frags_test=MPAC_functionals(-119.518,-1.59253,150.929,2147.78)
-#params=[0.117,10.68,1.1472,-0.7397]
-#E_c_int_test=-5.88927+(form_com_test.spl2(para6)-form_frags_test.spl2(para6))*kcal
-#E_c_int_test_2=-5.88927+(form_com_test.f1(para7)-form_frags_test.f1(para7))*kcal
-#print(E_c_int_test)
-#print(E_c_int_test_2)
