@@ -39,7 +39,7 @@ for i in range(3):
     chkfile="chkfile31_"+run_mol+".chk"
     ###runs HF
     old_pwd=os.getcwd()
-    datadir=old_pwd+"/Ne/"+run_mol
+    datadir=old_pwd+"/"+run_mol
     os.chdir(datadir)
     py_run=run_pyscf(atom="m.xyz",charge=args.charge,spin=args.spin,basis=args.basis)
     tab, eris = py_run.run_eris(chkfile_name=chkfile,chkfile_dir=datadir)
