@@ -3,8 +3,8 @@ from pyscf import gto, mp, ao2mo, dft, scf
 import numpy as np
 import argparse
 import os
-from numba_codes import reg_sos_mp2
-from mol import run_pyscf
+from kappa_codes.numba_codes import reg_sos_mp2
+from kappa_codes.mol import run_pyscf
 from kappa_codes.mpac_fun import MPAC_functionals
 from kappa_codes.constants import *
 
