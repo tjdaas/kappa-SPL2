@@ -63,7 +63,7 @@ while len(para)>4 or (len(para)<3 and len(para)>0): #removes the non-functional 
 for i in range(3): #run over the fragments and complex
     run_mol=mols[i]
     #add here path to frag m.xyz file
-    chkfile="chkfile31_"+run_mol+".chk"
+    chkfile="chkfile_"+run_mol+".chk"
     old_pwd=os.getcwd()
     datadir=old_pwd+"/Ne/"+run_mol
     os.chdir(datadir)
