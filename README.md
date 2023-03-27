@@ -24,7 +24,8 @@ Issues:
 
 To do list:
 1. Try to add parallalization while using jitclass
+2. Make the output of all_run.py be a.json file.
 
 Future implementations:
 1. add optimization scheme on S22 to allow all combinations of \kappa's, spin scaling and mpac functionals.
-2. file that runs all calculations at once and outputs 
+2. A smarter method to calculate all the functionals in all_run.py
