@@ -24,8 +24,6 @@ Issues:
 
 To do list:
 1. Try to add parallalization while using jitclass
-2. rewrite the function params as a dictionary
-3. clean up the code
 4. write proper documentation of the code
 5. change the boolean arg parse arguments to 0 (False), 1 (True) instead
 
