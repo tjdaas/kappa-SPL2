@@ -65,7 +65,7 @@ for i in range(3): #run over the fragments and complex
     #add here path to frag m.xyz file
     chkfile="chkfile_"+run_mol+".chk"
     old_pwd=os.getcwd()
-    datadir=old_pwd+"/Ne/"+run_mol
+    datadir=old_pwd+"/"+run_mol
     os.chdir(datadir)
     ###runs HF
     py_run=run_pyscf(atom="m.xyz",charge=args.charge,spin=args.spin,basis=args.basis)
