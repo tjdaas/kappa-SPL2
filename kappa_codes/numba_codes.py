@@ -13,7 +13,7 @@ spec = [
     ('eri',double[:,:,:,:]),
 ]
 @jitclass(spec)
-class reg_sos_mp2:
+class reg_sos_mp2: #the class containing all the MP2 integrals
 
     def __init__(self,nocc,e,eri):
         self.nocc=nocc
@@ -21,7 +21,7 @@ class reg_sos_mp2:
         self.eri=eri
     
     def MP2_energy(self):
-        '''Compute MP2 energy in parallel'''
+        '''Compute standard MP2 energy in parallel'''
         energy = 0. #- EMP2
         norb = self.e.shape[0] #total number of orbitals
         e_occ =self.e[:self.nocc] #occupied energies
@@ -37,7 +37,7 @@ class reg_sos_mp2:
 
     #@numba.njit(parallel=True)
     def MP2_energy_split(self):
-        '''Compute MP2 energy in parallel'''
+        '''Compute MP2 energy in parallel, split in a same spind and opposite spin part'''
         energy_SS = 0. #- EMP2 SS
         energy_OS = 0. #- MP2 OS
         norb = self.e.shape[0] #total number of orbitals
@@ -69,7 +69,7 @@ class reg_sos_mp2:
         return - energy
 
     def MP2_energy_kappa_p_split(self, kappa_SS, kappa_OS, p_SS, p_OS):
-        '''Compute MP2 energy with kapp and p in parallel'''
+        '''Compute MP2 energy with kapp and p in parallel with split same spin and opposite spin integrals'''
         energy_SS = 0. #- EMP2 SS
         energy_OS = 0. #- MP2 OS
         norb = self.e.shape[0] #total number of orbitals
@@ -87,7 +87,7 @@ class reg_sos_mp2:
     #SV: I split the above expression into two, one for OS and the other for SS (in case we need only one of the two, no need to do both)
 
     def MP2_energy_kappa_p_SS(self,kappa_SS, p_SS):
-        '''Compute SS MP2 energy with kapp and p in parallel'''
+        '''Compute same spin MP2 energy with kapp and p in parallel'''
         energy_SS = 0. #- EMP2 SS
         #energy_OS = 0. #- MP2 OS
         norb = self.e.shape[0] #total number of orbitals
@@ -102,6 +102,7 @@ class reg_sos_mp2:
         return - energy_SS 
 
     def MP2_energy_kappa_p_SS_parallel(self, kappa_SS, p_SS):
+        '''compute same spin MP2 energy for all kapp's'''
         energy_SS = np.zeros(kappa_SS.shape[0])
         for k in numba.prange(kappa_SS.shape[0]):
             energy_SS[k] = self.MP2_energy_kappa_p_SS(kappa_SS[k], p_SS)
@@ -123,6 +124,7 @@ class reg_sos_mp2:
         return - energy_OS
 
     def MP2_energy_kappa_p_OS_parallel(self, kappa_OS, p_OS):
+        '''compute same spin MP2 energy for all kapp's'''
         energy_OS = np.zeros(kappa_OS.shape[0])
         for k in numba.prange(kappa_OS.shape[0]):
             energy_OS[k] = self.MP2_energy_kappa_p_OS(kappa_OS[k], p_OS)
