@@ -103,7 +103,7 @@ elif args.mpacf == "f1": #calculate the interaction energy of F1
 elif args.mpacf == "f1ab": #calculate the interaction energy of F1[\alpha,\beta]
     E_c_int=(ehf[2]-ehf[1]-ehf[0]+form_com.f1(para)-form_frags.f1(para))*kcal
 
-elif args.mpacf == "mp2": #calcullate the interaction energy of MP@
+elif args.mpacf == "mp2": #calcullate the interaction energy of MP2
     E_c_int=(ehf[2]-ehf[1]-ehf[0]+form_com.mp2(para)-form_frags.mp2(para))*kcal
 
 else:
