@@ -24,8 +24,8 @@ Issues:
 
 To do list:
 1. Try to add parallalization while using jitclass
-4. write proper documentation of the code
 5. change the boolean arg parse arguments to 0 (False), 1 (True) instead
 
 Future implementations:
 1. add optimization scheme on S22 to allow all combinations of \kappa's, spin scaling and mpac functionals.
+2. file that runs all calculations at once and outputs 
