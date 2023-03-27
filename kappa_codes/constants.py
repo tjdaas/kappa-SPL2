@@ -2,9 +2,10 @@
 a file containing constants
 """
 
-A = -1.451
-B = 5.317e-3
-kcal = 627.51
+A = -1.451 #The A of the PC model
+B = 5.317e-3 #the B of the PC model
+kcal = 627.51 #the conversion of Hartree to kcal/mol
+#Dictionary containing all the different parameters, were the first x-2 are the functional specific parameters, then \kappa_ss or c_os depending on the sytem and lastly k_os.
 params={
     (True,False,True,"spl2"): [-0.433, 5.775,1.843,-1.750,1.7,1.7],
     (True,False,True,"f1"): [-0.3660,0.4677,1,1,1.3,1.3],
@@ -26,5 +27,5 @@ params={
     (False,True,False,"f1"): [2.206,0.7068,1,1,2.2],
     (False,True,False,"f1ab"): [2.769, -0.3665,8.3970,-14.2015,2],
     (False,True,False,"mp2"): [1.7],
-}
+} 
 
