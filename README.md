@@ -7,9 +7,9 @@ Depends on the following packages:
 - [scipy]
 
 ## To run the calculations correctly one need to have the following directory structure in the working directory:
-A/m.xyz
-B/m.xyz
-AB/m.xyz
+* A/m.xyz
+* B/m.xyz
+* AB/m.xyz
 for fragment A, fragment B and the full complex AB.
 
 ## Input parameters to give on the command line:
