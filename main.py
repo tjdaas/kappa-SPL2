@@ -94,17 +94,18 @@ for i in range(3): #run over the fragements and complex
     os.chdir(old_pwd)
 form_frags=MPAC_functionals(Ex[0]+Ex[1],(E_c_mp2[0]+E_c_mp2[1]),rho_4_3[0]+rho_4_3[1],gea_4_3[0]+gea_4_3[1]) #initialize the MPAC functionals
 form_com=MPAC_functionals(Ex[2],E_c_mp2[2],rho_4_3[2],gea_4_3[2])
+ehfdiv=ehf[2]-ehf[1]-ehf[0]
 if args.mpacf == "spl2": #calculate the interaction energy of SPL2
-    E_c_int=(ehf[2]-ehf[1]-ehf[0]+form_com.spl2(para)-form_frags.spl2(para))*kcal
+    E_c_int=(ehfdiv+form_com.spl2(para)-form_frags.spl2(para))*kcal
 
 elif args.mpacf == "f1": #calculate the interaction energy of F1
-    E_c_int=(ehf[2]-ehf[1]-ehf[0]+form_com.f1(para)-form_frags.f1(para))*kcal
+    E_c_int=(ehfdiv+form_com.f1(para)-form_frags.f1(para))*kcal
 
 elif args.mpacf == "f1ab": #calculate the interaction energy of F1[\alpha,\beta]
-    E_c_int=(ehf[2]-ehf[1]-ehf[0]+form_com.f1(para)-form_frags.f1(para))*kcal
+    E_c_int=(ehfdiv+form_com.f1(para)-form_frags.f1(para))*kcal
 
 elif args.mpacf == "mp2": #calcullate the interaction energy of MP2
-    E_c_int=(ehf[2]-ehf[1]-ehf[0]+form_com.mp2(para)-form_frags.mp2(para))*kcal
+    E_c_int=(ehfdiv+form_com.mp2(para)-form_frags.mp2(para))*kcal
 
 else:
     print("only supports: spl2, f1, f1ab and mp2") #gives error if the wrong name is use
