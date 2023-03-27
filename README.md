@@ -6,7 +6,7 @@ Depends on the following packages:
 - [numpy]
 - [scipy]
 
-## To run the calculations correctly one need to have the following directory structure in the working directory:
+## To run the calculations correctly one needs to have the following directory structure in the working directory:
 * A/m.xyz
 * B/m.xyz
 * AB/m.xyz
