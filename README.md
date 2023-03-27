@@ -16,15 +16,14 @@ Input parameters to give on the command line:
 1. the charge of the molecule (int)
 2. the spin of the molecule (int)
 3. the basisset (str) (only supports basissets implemented in pyscf)
-4. \kappa regularizer (bool)
-5. spin-opposite-scaling (bool)
-6. original \kappa-mp2 (bool)
+4. \kappa regularizer (bool) (True=True, no argument=False)
+5. spin-opposite-scaling (bool) (True=True, no argument=False)
+6. original \kappa-mp2 (bool) (True=True, no argument=False)
 
 Issues:
 
 To do list:
 1. Try to add parallalization while using jitclass
-5. change the boolean arg parse arguments to 0 (False), 1 (True) instead
 
 Future implementations:
 1. add optimization scheme on S22 to allow all combinations of \kappa's, spin scaling and mpac functionals.
