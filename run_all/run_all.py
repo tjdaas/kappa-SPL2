@@ -3,10 +3,10 @@ from pyscf import gto, mp, ao2mo, dft, scf
 import numpy as np
 import argparse
 import os
-from numba_codes import reg_sos_mp2
-from mol import run_pyscf
-from mpac_fun import MPAC_functionals
-from constants import *
+from all_codes.numba_all import reg_sos_mp2
+from all_codes.mol_all import run_pyscf
+from all_codes.mpac_all import MPAC_functionals
+from all_codes.constants_all import *
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -44,7 +44,7 @@ for i in range(3): #run over the fragements and complex
     #add here path to frag m.xyz file
     chkfile="chkfile31_"+run_mol+".chk"
     old_pwd=os.getcwd()
-    datadir=old_pwd+"/Ne/"+run_mol
+    datadir=old_pwd+"/"+run_mol
     os.chdir(datadir)
     ###runs HF
     py_run=run_pyscf(atom="m.xyz",charge=args.charge,spin=args.spin,basis=args.basis)
