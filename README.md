@@ -5,6 +5,7 @@ Depends on the following packages:
 - [numba]
 - [numpy]
 - [scipy]
+- [json]
 
 ## To run the calculations correctly one needs to have the following directory structure in the working directory:
 * A/m.xyz
@@ -33,7 +34,6 @@ run_all.py can be found in the run_all directory, which runs all the 20 function
 
 ## To do list:
 1. Try to add parallalization while using jitclass
-2. Make the output of all_run.py be a.json file.
 
 ## Future implementations:
 1. add optimization scheme on S22 to allow all combinations of \kappa's, spin scaling and mpac functionals.
