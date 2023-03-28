@@ -2,6 +2,7 @@
 from pyscf import gto, mp, ao2mo, dft, scf
 import numpy as np
 import argparse
+import json
 import os
 from all_codes.numba_all import reg_sos_mp2
 from all_codes.mol_all import run_pyscf
@@ -139,5 +140,7 @@ E_c_mp2.append((ehfdiv+form_com.mp2(params[funcs[19]],E_c_mp2_com[19])-form_frag
 
 #print json file
 E_c_ints=E_c_spl2+E_c_f1+E_c_f1ab+E_c_mp2
-E_c_int=list(zip(funcs,E_c_ints))
+E_c_int=dict(zip(funcs,E_c_ints))
 print(E_c_int) #prints out the correct E_c_int
+with open("E_c_all.json","w",encoding="utf-8") as f:
+    json.dump(E_c_int,f)
