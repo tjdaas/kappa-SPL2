@@ -1,5 +1,4 @@
-#import pyscf and numpy
-from pyscf import gto, mp, ao2mo, dft, scf
+#import modules and codes
 import numpy as np
 import argparse
 import os
