@@ -25,14 +25,12 @@ class run_pyscf():
         self.rho_trunc = rho_trunc
         self.mol = gto.M(atom=self.mol,basis=basis,charge=charge)
         self.mol.max_memory = 2000000
-        self.mol.verbose = 4
         nel = sum(self.mol.nelec) #number of electrons
         self.nocc = nel//2  #number of occupied orbitals
 
     def run_mol(self, chkfile_name: str = "", chkfile_dir: str =""):
         '''performing the HF SCF calculations or loading the chkfile'''
         mf = dft.RKS(self.mol).density_fit()
-        mf.verbose = 4
         mf.xc='HF' #do RKS, but xc functional is 100% HF
         mf.grids.level = 4 #highest level of grids is 9; seems too large
         if chkfile_name == "":
