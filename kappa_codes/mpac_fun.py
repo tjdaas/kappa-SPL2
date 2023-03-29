@@ -1,3 +1,7 @@
+"""
+The MPAC functionals defined as in <https://doi.org/10.1021/acs.jpclett.1c01157>
+"""
+
 import numpy as np
 from constants import A,B
 
