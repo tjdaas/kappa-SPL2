@@ -1,3 +1,7 @@
+"""
+Calculating the interaction energy for a MPAC functional defined by the user
+"""
+
 #import modules and codes
 import numpy as np
 import argparse
