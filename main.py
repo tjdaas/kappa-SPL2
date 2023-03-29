@@ -16,32 +16,33 @@ if __name__ == "__main__":
     parser.add_argument("--func",type=str,default="coskos-SPL2")
 
 args = parser.parse_args()
+func = args.func.lower()
 #obtaining the attributes of the inputted functional:
-if "kos" in args.func: #checking if it uses the \kappa regularizer
+if "kos" in func: #checking if it uses the \kappa regularizer
     kappa=True
 else:
     kappa=False
-if "cos" in args.func: #checking if it uses the spin opposite scaling
+if "cos" in func: #checking if it uses the spin opposite scaling
     cos=True
 else:
     cos=False
-if "k-" in args.func: #checking if it is the original \kappa-method
+if "k-" in func: #checking if it is the original \kappa-method
     ksam=True
     kappa=True
 else:
     ksam=False
-if "mp2" in args.func: #checking which base functional is used
+if "mp2" in func: #checking which base functional is used
     mpacf="mp2"
-elif "spl2" in args.func:
+elif "spl2" in func:
     mpacf="spl2"
-elif "f1ab" in args.func:
+elif "f1ab" in func:
     mpacf="f1ab"
-elif "f1" in args.func:
+elif "f1" in func:
     mpacf="f1"
 else:
     raise ValueError("no valid functional provided, please use mp2, spl2, f1 or f1ab") #gives error if the wrong functional is used
 
-if kappa==False and cos==False and args.func.split(mpacf)[0]!="":
+if kappa==False and cos==False and func.split(mpacf)[0]!="":
     raise ValueError("Unknown prefix use coskos-, ksskos-, k- or no prefix") #gives error if the wrong prefix is used
     
 mols=["A","B","AB"] #A and B are fragments, AB is the complex
@@ -70,7 +71,6 @@ for i in range(3): #run over the fragments and complex
     ###runs HF
     py_run=run_pyscf(atom="m.xyz",charge=args.charge,spin=args.spin,basis=args.basis)
     tab, eris = py_run.run_eris(chkfile_name=chkfile,chkfile_dir=datadir)
-    nocc, e, eri = eris
     #this prints and extracts all of the ingredients except MP2
     np.savetxt("tab.csv", tab, delimiter=",", fmt='%s')
     ehf.append(tab[0])
@@ -80,7 +80,6 @@ for i in range(3): #run over the fragments and complex
     gea_4_3.append(tab[4])
     rho_3_2.append(tab[5])
     gea_7_6.append(tab[6])
-    defs=reg_sos_mp2(nocc,e,eri) #define MP2
     if kappa==True: #if \kappa is turned on
         #k1 is for same spin
         #k2 is for the opposite spin
@@ -92,11 +91,11 @@ for i in range(3): #run over the fragments and complex
         k1s=np.array(k1ss,dtype=float)
         k2s=np.array(k2ss,dtype=float)
         k_os=kapcoslist[0]
-        mp2OS = defs.MP2_energy_kappa_p_OS_parallel(k2s, 1) #calculate the opposite spin integral
+        mp2OS = defs.MP2_energy_kappa_p_OS_parallel(*eris,k2s, 1) #calculate the opposite spin integral
         np.savetxt("os.csv", mp2OS, delimiter=",", fmt='%s')
         #Spin scaled \kappa's
         if cos==False:
-            mp2SS = defs.MP2_energy_kappa_p_SS_parallel(k1s, 1) #calculate the same spin integral
+            mp2SS = defs.MP2_energy_kappa_p_SS_parallel(*eris,k1s, 1) #calculate the same spin integral
             np.savetxt("ss.csv", mp2SS, delimiter=",", fmt='%s')
             k_ss=kapcoslist[1] 
             E_c_kmp2_tot= mp2SS[k1ss.index(k_ss)] + mp2OS[k2ss.index(k_os)] #take only the value that corresponds to the optimal k_ss and k_os
@@ -107,7 +106,7 @@ for i in range(3): #run over the fragments and complex
             E_c_mp2.append(E_c_kmp2_cos)
     else: #run MP2 without \kappa
         ###Runs E_c^MP2(ss) and E_c^MP2(os)
-        e_mp2_split = defs.MP2_energy_split() #cal
+        e_mp2_split = defs.MP2_energy_split(*eris) #cal
         np.savetxt("mp2.csv", e_mp2_split, delimiter=",", fmt='%s')
         if cos==False: #run regular MP2
             E_c_mp2_tot= sum(e_mp2_split)
