@@ -1,3 +1,6 @@
+"""
+A file containing the parallelized MP2 codes sped up by numba.
+"""
 #import numpy and numba
 import numpy as np
 import numba
