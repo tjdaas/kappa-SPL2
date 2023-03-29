@@ -1,5 +1,5 @@
 """
-A file containing the parallelized MP2 codes sped up by numba.
+A file running the pyscf RHF calculation or loading the chk-file in.
 """
 #import pyscf and numpy
 import os
