@@ -6,7 +6,7 @@ Calculating the interaction energy for a MPAC functional defined by the user
 import numpy as np
 import argparse
 import os
-from kappa_codes.numba_codes import reg_sos_mp2
+from kappa_codes.numba_codes import
 from kappa_codes.mol import run_pyscf
 from kappa_codes.mpac_fun import MPAC_functionals
 from kappa_codes.constants import *
