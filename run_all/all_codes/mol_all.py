@@ -1,3 +1,6 @@
+"""
+A file running the pyscf RHF calculation or loading the chk-file in.
+"""
 #import pyscf and numpy
 import os
 import shutil
