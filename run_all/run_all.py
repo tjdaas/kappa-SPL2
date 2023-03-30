@@ -43,7 +43,7 @@ E_c_mp2_frag=[]
 for i in range(3): #run over the fragements and complex
     run_mol=mols[i]
     #add here path to frag m.xyz file
-    chkfile="chkfile31_"+run_mol+".chk"
+    chkfile="chkfile_"+run_mol+".chk"
     old_pwd=os.getcwd()
     datadir=old_pwd+"/"+run_mol
     os.chdir(datadir)
@@ -65,7 +65,6 @@ for i in range(3): #run over the fragements and complex
     k2ss = k1ss
     np.savetxt("k1.csv", k1ss, delimiter=",", fmt='%s')
     np.savetxt("k2.csv", k2ss, delimiter=",", fmt='%s')
-
     k1s=np.array(k1ss,dtype=float)
     k2s=np.array(k2ss,dtype=float)
     mp2OS = MP2_energy_kappa_p_OS_parallel(*eris,k2s, 1) #calculate the opposite spin integral with kappa
@@ -89,6 +88,7 @@ ehfdiv=ehf[2]-ehf[1]-ehf[0]
 for i in range(len(mpacf)):
     E_c_mp2_com.append(E_c_mp2tot[2])
     E_c_mp2_frag.append(E_c_mp2tot[0]+E_c_mp2tot[1])
+#calculating the cos-MP2 for all functionals
 c_os=[1.8,2.2,2,1.7]
 for i in range(len(mpacf)):
     E_c_mp2_com.append(c_os[i]*E_c_OS[2])
