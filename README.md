@@ -20,14 +20,6 @@ for fragment A, fragment B and the full complex AB.
 4. --func: the functional that you want to run (str) (default="coskos-SPL2)
 For func use mp2, spl2, f1 or f1ab as base and add a prefix as coskos-, cos-, ksskos-, k- or no prefix.
 
-## Known Issues:
-None
-
-## Future implementations:
-1. add optimization scheme on S22 to allow all combinations of \kappa's, spin scaling and mpac functionals.
-2. A smarter method to calculate all the functionals in all_run.py.
-3. Rewriting the numba_codes file with jax instead.
-
 ## Other Support:
 run_all.py can be found in the run_all directory, which runs all the 20 functionals and outputs a .json file.
 
@@ -35,3 +27,11 @@ run_all.py can be found in the run_all directory, which runs all the 20 function
 1. --charge: the charge of the molecule (int) (default=0)
 2. --spin: the spin of the molecule (int) (default=0)
 3. --basis: the basisset (str) (default="aug-cc-pvqz") (only supports basissets implemented in pyscf) 
+
+## Known Issues:
+None
+
+## Future implementations:
+1. add optimization scheme on S22 to allow all combinations of \kappa's, spin scaling and mpac functionals.
+2. A smarter method to calculate all the functionals in all_run.py.
+3. Rewriting the numba_codes file with jax instead.
