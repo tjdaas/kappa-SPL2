@@ -1,10 +1,12 @@
+"""
+Calculating the interaction energy for all MPAC functionals at once
+"""
+
 #import pyscf, numpy and numba
-from pyscf import gto, mp, ao2mo, dft, scf
 import numpy as np
 import argparse
-import json
 import os
-from all_codes.numba_all import reg_sos_mp2
+from kappa_codes.numba_all import *
 from all_codes.mol_all import run_pyscf
 from all_codes.mpac_all import MPAC_functionals
 from all_codes.constants_all import *
@@ -18,8 +20,6 @@ if __name__ == "__main__":
 args = parser.parse_args()
 mols=["A","B","AB"] #A and B are fragments, AB is the complex
 mpacf=["spl2","f1","f1ab","mp2"]
-print(params["SPL2"])
-print(type(params["SPL2"]))
 
 Ex=[]
 ehf=[]
@@ -50,7 +50,6 @@ for i in range(3): #run over the fragements and complex
     ###runs HF
     py_run=run_pyscf(atom="m.xyz",charge=args.charge,spin=args.spin,basis=args.basis)
     tab, eris = py_run.run_eris(chkfile_name=chkfile,chkfile_dir=datadir)
-    nocc, e, eri = eris
     #this prints and extracts all of the ingredients except MP2
     np.savetxt("tab.csv", tab, delimiter=",", fmt='%s')
     ehf.append(tab[0])
@@ -60,7 +59,6 @@ for i in range(3): #run over the fragements and complex
     gea_4_3.append(tab[4])
     rho_3_2.append(tab[5])
     gea_7_6.append(tab[6])
-    defs=reg_sos_mp2(nocc,e,eri) #define MP2
     #k1 is for same spin
     #k2 is for the opposite spin
     k1ss = [0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7]
@@ -70,14 +68,14 @@ for i in range(3): #run over the fragements and complex
 
     k1s=np.array(k1ss,dtype=float)
     k2s=np.array(k2ss,dtype=float)
-    mp2OS = defs.MP2_energy_kappa_p_OS_parallel(k2s, 1) #calculate the opposite spin integral with kappa
+    mp2OS = MP2_energy_kappa_p_OS_parallel(*eris,k2s, 1) #calculate the opposite spin integral with kappa
     E_c_OS_k.append(mp2OS)
     np.savetxt("os.csv", mp2OS, delimiter=",", fmt='%s')
     #Spin scaled \kappa's
-    mp2SS = defs.MP2_energy_kappa_p_SS_parallel(k1s, 1) #calculate the same spin integral with kappa
+    mp2SS = MP2_energy_kappa_p_SS_parallel(*eris,k1s, 1) #calculate the same spin integral with kappa
     E_c_SS_k.append(mp2SS)
     np.savetxt("ss.csv", mp2SS, delimiter=",", fmt='%s')
-    e_mp2_split = defs.MP2_energy_split() #calculates the same an opposite mp2 integrals
+    e_mp2_split = MP2_energy_split(*eris,) #calculates the same an opposite mp2 integrals
     np.savetxt("mp2.csv", e_mp2_split, delimiter=",", fmt='%s')
     E_c_SS.append(e_mp2_split[0])
     E_c_OS.append(e_mp2_split[1])
