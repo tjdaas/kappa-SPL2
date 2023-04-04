@@ -32,13 +32,10 @@ E_c_mp2=[]
 E_c_spl2=[]
 E_c_f1=[]
 E_c_f1ab=[]
-E_c_SS=[]
 E_c_SS_k=[]
 E_c_OS=[]
 E_c_OS_k=[]
 E_c_mp2tot=[]
-E_c_mp2_com=[]
-E_c_mp2_frag=[]
 
 for i in range(3): #run over the fragements and complex
     run_mol=mols[i]
@@ -81,64 +78,35 @@ for i in range(3): #run over the fragements and complex
     E_c_mp2tot.append(sum(e_mp2_split))
     os.chdir(old_pwd)
 
-#calculating the normal MP2 for functionals
-form_frags=MPAC_functionals(Ex[0]+Ex[1],rho_4_3[0]+rho_4_3[1],gea_4_3[0]+gea_4_3[1]) #initialize the MPAC functionals
+#getting the arrays into the correct shape
+E_c_SS_k=np.array(E_c_SS_k).T
+E_c_OS_k=np.array(E_c_OS_k).T
+E_c_OS=np.array(E_c_OS)
+
+#initializing the MPAC functionals and calculating the HF energy difference
+form_frags=MPAC_functionals(Ex[0]+Ex[1],rho_4_3[0]+rho_4_3[1],gea_4_3[0]+gea_4_3[1])
 form_com=MPAC_functionals(Ex[2],rho_4_3[2],gea_4_3[2]) 
 ehfdiv=ehf[2]-ehf[1]-ehf[0]
-for i in range(len(mpacf)):
-    E_c_mp2_com.append(E_c_mp2tot[2])
-    E_c_mp2_frag.append(E_c_mp2tot[0]+E_c_mp2tot[1])
-#calculating the cos-MP2 for all functionals
-c_os=[1.8,2.2,2,1.7]
-for i in range(len(mpacf)):
-    E_c_mp2_com.append(c_os[i]*E_c_OS[2])
-    E_c_mp2_frag.append(c_os[i]*(E_c_OS[0]+E_c_OS[1]))
-#calculating the coskos-MP2 for all functionals
-coskos=[[2.1,1.3],[2.3,1.1],[2.4,1],[2.1,0.9]]
-for i in range(len(mpacf)):
-    kos=k2ss.index(coskos[i][1])
-    E_c_mp2_com.append(coskos[i][0]*E_c_OS_k[2][kos])
-    E_c_mp2_frag.append(coskos[i][0]*(E_c_OS_k[0][kos]+E_c_OS_k[1][kos]))
-#calculating the ksskos-MP2 for all functionals
-ksskos=[[1.1,1.7],[1,1.4],[1.6,1.3],[0.9,1.4]]
-for i in range(len(mpacf)):
-    kss=k1ss.index(ksskos[i][0])
-    kos=k2ss.index(ksskos[i][1])
-    E_c_mp2_com.append(E_c_SS_k[2][kss]+E_c_OS_k[2][kos])
-    E_c_mp2_frag.append(E_c_SS_k[0][kss]+E_c_OS_k[0][kos]+E_c_SS_k[1][kss]+E_c_OS_k[1][kos])
-#calculating the k-MP2 for all functionals
-ktot=[1.7,1.3,1.5,1.1]
-for i in range(len(mpacf)):
-    k=k1ss.index(ktot[i])
-    E_c_mp2_com.append(E_c_SS_k[2][k]+E_c_OS_k[2][k])
-    E_c_mp2_frag.append(E_c_SS_k[0][k]+E_c_OS_k[0][k]+E_c_SS_k[1][k]+E_c_OS_k[1][k])
-funcs=["SPL2","cos-SPL2","coskos-SPL2","ksskos-SPL2","k-SPL2","F1","cos-F1","coskos-F1","ksskos-F1","k-F1","F1ab","cos-F1ab","coskos-F1ab","ksskos-F1ab","k-F1ab","MP2","cos-MP2","coskos-MP2","ksskos-MP2","k-MP2"]
+funcs=["MP2","SPL2","F1","F1ab","k-MP2","k-SPL2","k-F1","k-F1ab","ksskos-MP2","ksskos-SPL2","ksskos-F1","ksskos-F1ab","coskos-MP2","coskos-SPL2","coskos-F1","coskos-F1ab","cos-MP2","cos-SPL2","cos-F1","cos-F1ab"]
 
-#running all the functionals for all E_c_mp2 methods
-E_c_spl2.append((ehfdiv+form_com.spl2(params[funcs[0]],E_c_mp2_com[0])-form_frags.spl2(params[funcs[0]],E_c_mp2_frag[0]))*kcal)
-E_c_f1.append((ehfdiv+form_com.f1(params[funcs[5]],E_c_mp2_com[1])-form_frags.f1(params[funcs[5]],E_c_mp2_frag[1]))*kcal)
-E_c_f1ab.append((ehfdiv+form_com.f1(params[funcs[10]],E_c_mp2_com[2])-form_frags.f1(params[funcs[10]],E_c_mp2_frag[2]))*kcal)
-E_c_mp2.append((ehfdiv+form_com.mp2(params[funcs[15]],E_c_mp2_com[3])-form_frags.mp2(params[funcs[15]],E_c_mp2_frag[3]))*kcal)
-E_c_spl2.append((ehfdiv+form_com.spl2(params[funcs[1]],E_c_mp2_com[4])-form_frags.spl2(params[funcs[1]],E_c_mp2_frag[4]))*kcal)
-E_c_f1.append((ehfdiv+form_com.f1(params[funcs[6]],E_c_mp2_com[5])-form_frags.f1(params[funcs[6]],E_c_mp2_frag[5]))*kcal)
-E_c_f1ab.append((ehfdiv+form_com.f1(params[funcs[11]],E_c_mp2_com[6])-form_frags.f1(params[funcs[11]],E_c_mp2_frag[6]))*kcal)
-E_c_mp2.append((ehfdiv+form_com.mp2(params[funcs[16]],E_c_mp2_com[7])-form_frags.mp2(params[funcs[16]],E_c_mp2_frag[7]))*kcal)
-E_c_spl2.append((ehfdiv+form_com.spl2(params[funcs[2]],E_c_mp2_com[8])-form_frags.spl2(params[funcs[2]],E_c_mp2_frag[8]))*kcal)
-E_c_f1.append((ehfdiv+form_com.f1(params[funcs[7]],E_c_mp2_com[9])-form_frags.f1(params[funcs[7]],E_c_mp2_frag[9]))*kcal)
-E_c_f1ab.append((ehfdiv+form_com.f1(params[funcs[12]],E_c_mp2_com[10])-form_frags.f1(params[funcs[12]],E_c_mp2_frag[10]))*kcal)
-E_c_mp2.append((ehfdiv+form_com.mp2(params[funcs[17]],E_c_mp2_com[11])-form_frags.mp2(params[funcs[17]],E_c_mp2_frag[11]))*kcal)
-E_c_spl2.append((ehfdiv+form_com.spl2(params[funcs[3]],E_c_mp2_com[12])-form_frags.spl2(params[funcs[3]],E_c_mp2_frag[12]))*kcal)
-E_c_f1.append((ehfdiv+form_com.f1(params[funcs[8]],E_c_mp2_com[13])-form_frags.f1(params[funcs[8]],E_c_mp2_frag[13]))*kcal)
-E_c_f1ab.append((ehfdiv+form_com.f1(params[funcs[13]],E_c_mp2_com[14])-form_frags.f1(params[funcs[13]],E_c_mp2_frag[14]))*kcal)
-E_c_mp2.append((ehfdiv+form_com.mp2(params[funcs[18]],E_c_mp2_com[15])-form_frags.mp2(params[funcs[18]],E_c_mp2_frag[15]))*kcal)
-E_c_spl2.append((ehfdiv+form_com.spl2(params[funcs[4]],E_c_mp2_com[16])-form_frags.spl2(params[funcs[4]],E_c_mp2_frag[16]))*kcal)
-E_c_f1.append((ehfdiv+form_com.f1(params[funcs[9]],E_c_mp2_com[17])-form_frags.f1(params[funcs[9]],E_c_mp2_frag[17]))*kcal)
-E_c_f1ab.append((ehfdiv+form_com.f1(params[funcs[14]],E_c_mp2_com[18])-form_frags.f1(params[funcs[14]],E_c_mp2_frag[18]))*kcal)
-E_c_mp2.append((ehfdiv+form_com.mp2(params[funcs[19]],E_c_mp2_com[19])-form_frags.mp2(params[funcs[19]],E_c_mp2_frag[19]))*kcal)
+#storing all the EMP2 data
+EMP2vals={
+    "MP2": [E_c_mp2tot]*4,
+    "k-MP2": [E_c_SS_k[5] + E_c_OS_k[5],E_c_SS_k[11] + E_c_OS_k[11],E_c_SS_k[7] + E_c_OS_k[7],E_c_SS_k[9] +E_c_OS_k[9]],
+    "ksskos-MP2": [E_c_SS_k[3] + E_c_OS_k[8],E_c_SS_k[5] + E_c_OS_k[11],E_c_SS_k[4] + E_c_OS_k[8],E_c_SS_k[10] + E_c_OS_k[7]],
+    "coskos-MP2":[2.1*E_c_OS_k[3],2.1*E_c_OS_k[7],2.3*E_c_OS_k[5],2.5*E_c_OS_k[4]],
+    "cos-MP2": [1.7*E_c_OS,1.8*E_c_OS,2.2*E_c_OS,2*E_c_OS]
+}
+
+#calculating all the 20 functionals
+for name,emp2 in EMP2vals.items():
+    E_c_int.append(form_com.mp2(params[name][0],emp2[0][2])-form_frags.mp2(params[name][0],emp2[0][1]+emp2[0][0]))
+    E_c_int.append(form_com.spl2(params[name][1],emp2[1][2])-form_frags.spl2(params[name][1],emp2[1][1]+emp2[1][0]))
+    E_c_int.append(form_com.f1(params[name][2],emp2[2][2])-form_frags.f1(params[name][2],emp2[2][1]+emp2[2][0]))
+    E_c_int.append(form_com.f1(params[name][3],emp2[3][2])-form_frags.f1(params[name][3],emp2[3][1]+emp2[3][0]))
 
 #print json file
-E_c_ints=E_c_spl2+E_c_f1+E_c_f1ab+E_c_mp2
-E_c_int=dict(zip(funcs,E_c_ints))
-print(E_c_int) #prints out the correct E_c_int
+E_c_ints=dict(zip(funcs,kcal*(ehfdiv+np.array(E_c_int))))
+print(E_c_ints) #prints out the correct E_c_int
 with open("E_c_all.json","w",encoding="utf-8") as f:
-    json.dump(E_c_int,f)
+    json.dump(E_c_ints,f)
