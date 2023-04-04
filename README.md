@@ -33,4 +33,3 @@ None
 
 ## Future implementations:
 1. add optimization scheme on S22 to allow all combinations of \kappa's, spin scaling and mpac functionals.
-2. A smarter method to calculate all the functionals in all_run.py.
