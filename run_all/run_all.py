@@ -6,10 +6,11 @@ Calculating the interaction energy for all MPAC functionals at once
 import numpy as np
 import argparse
 import os
-from kappa_codes.numba_all import *
+from all_codes.numba_all import *
 from all_codes.mol_all import run_pyscf
-from all_codes.mpac_all import MPAC_functionals
+from all_codes.mpac_fun_all import MPAC_functionals
 from all_codes.constants_all import *
+import json
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -28,11 +29,9 @@ rho_4_3=[]
 gea_4_3=[]
 rho_3_2=[]
 gea_7_6=[]
-E_c_mp2=[]
-E_c_spl2=[]
-E_c_f1=[]
-E_c_f1ab=[]
+E_c_int=[]
 E_c_SS_k=[]
+E_c_SS=[]
 E_c_OS=[]
 E_c_OS_k=[]
 E_c_mp2tot=[]
