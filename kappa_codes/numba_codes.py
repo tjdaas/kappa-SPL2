@@ -4,6 +4,8 @@ A file containing the parallelized MP2 codes sped up by numba.
 #import numpy and numba
 import numpy as np
 import numba
+import os
+os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
 
 @numba.njit(parallel=True)
 def MP2_energy_split(nocc, e, eri):
