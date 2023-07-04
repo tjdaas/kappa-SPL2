@@ -2,7 +2,7 @@
 The MPAC functionals defined as in <https://doi.org/10.1021/acs.jpclett.1c01157>
 """
 import numpy as np
-from constants import A,B
+from .constants_all import A,B
 
 class MPAC_functionals:
     def __init__(self,Ex,rho_4_3,gea_4_3):
