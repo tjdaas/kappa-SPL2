@@ -29,7 +29,8 @@ run_all.py can be found in the run_all directory, which runs all the 20 function
 3. --basis: the basisset (str) (default="aug-cc-pvqz") (only supports basissets implemented in pyscf) 
 
 ## Known Issues:
-None
+There is currently a workaround to fix an issue that numba has.
+
 
 ## Future implementations:
 1. add optimization scheme on S22 to allow all combinations of \kappa's, spin scaling and mpac functionals.
