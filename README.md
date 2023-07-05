@@ -4,6 +4,7 @@ Depends on the following packages:
 - [pyscf]
 - [numba]
 - [numpy]
+- [openmp]
 - [json]
 
 ## To run the calculations correctly one needs to have the following directory structure in the working directory:
@@ -30,7 +31,8 @@ run_all.py can be found in the run_all directory, which runs all the 20 function
 
 ## Known Issues:
 There is currently a workaround to fix an issue that numba has.
-To solve any issue install openmp, then conda install numba cffi -c drtodd13 -c conda-forge --override-channel
+To solve any issue install openmp, then:
+- conda install numba cffi -c drtodd13 -c conda-forge --override-channel
 
 ## Future implementations:
 1. add optimization scheme on S22 to allow all combinations of \kappa's, spin scaling and mpac functionals.
