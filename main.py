@@ -88,17 +88,17 @@ for i in range(3): #run over the fragments and complex
         #k2 is for the opposite spin
         k1ss = [0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7]
         k2ss = k1ss
-        np.savetxt("k1.csv", k1s, delimiter=",", fmt='%s')
-        np.savetxt("k2.csv", k2s, delimiter=",", fmt='%s')
+        np.savetxt("k1.csv", k1ss, delimiter=",", fmt='%s')
+        np.savetxt("k2.csv", k2ss, delimiter=",", fmt='%s')
 
         k1s=np.array(k1ss,dtype=float)
         k2s=np.array(k2ss,dtype=float)
         k_os=kapcoslist[0]
-        mp2OS = defs.MP2_energy_kappa_p_OS_parallel(*eris,k2s, 1) #calculate the opposite spin integral
+        mp2OS = MP2_energy_kappa_p_OS_parallel(*eris,k2s, 1) #calculate the opposite spin integral
         np.savetxt("os.csv", mp2OS, delimiter=",", fmt='%s')
         #Spin scaled \kappa's
         if cos==False:
-            mp2SS = defs.MP2_energy_kappa_p_SS_parallel(*eris,k1s, 1) #calculate the same spin integral
+            mp2SS = MP2_energy_kappa_p_SS_parallel(*eris,k1s, 1) #calculate the same spin integral
             np.savetxt("ss.csv", mp2SS, delimiter=",", fmt='%s')
             k_ss=kapcoslist[1] 
             E_c_kmp2_tot= mp2SS[k1ss.index(k_ss)] + mp2OS[k2ss.index(k_os)] #take only the value that corresponds to the optimal k_ss and k_os
@@ -109,7 +109,7 @@ for i in range(3): #run over the fragments and complex
             E_c_mp2.append(E_c_kmp2_cos)
     else: #run MP2 without \kappa
         ###Runs E_c^MP2(ss) and E_c^MP2(os)
-        e_mp2_split = defs.MP2_energy_split(*eris) #cal
+        e_mp2_split = MP2_energy_split(*eris) #cal
         np.savetxt("mp2.csv", e_mp2_split, delimiter=",", fmt='%s')
         if cos==False: #run regular MP2
             E_c_mp2_tot= sum(e_mp2_split)
