@@ -4,6 +4,7 @@ Depends on the following packages:
 - [pyscf]
 - [numba]
 - [numpy]
+- [argparse]
 - [openmp]
 - [json]
 
