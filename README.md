@@ -36,3 +36,4 @@ To solve any issue install openmp, then:
 
 ## Future implementations:
 1. add optimization scheme on S22 to allow all combinations of \kappa's, spin scaling and mpac functionals.
+2. write docstrings for all of the functions.
