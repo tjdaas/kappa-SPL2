@@ -16,7 +16,7 @@ if __name__ == "__main__":
     parser.add_argument("--charge", type=int, default=0, help="the charge of the system")
     parser.add_argument("--spin", type=int, default=0, help="the spin of the system")
     parser.add_argument("--basis", type=str, default="aug-cc-pvqz",help="the basisset used in the calculations")
-    parser.add_argument("--func",type=str,default="coskos-SPL2")
+    parser.add_argument("--func",type=str,default="coskos-SPL2", help="the MP AC functional used including the prefix")
 
 args = parser.parse_args()
 func = args.func.lower()
