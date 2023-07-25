@@ -1,13 +1,12 @@
 """
-A file running the pyscf RHF calculation or loading the chk-file in.
+A file that runs the pyscf RHF calculation or loads the chk-file in.
 """
-#import pyscf and numpy
+
 import os
 import shutil
 import numpy as np
 from tempfile import NamedTemporaryFile
 from pyscf import gto, ao2mo, dft
-
 
 class run_pyscf():
 
@@ -19,6 +18,17 @@ class run_pyscf():
         rho_trunc: float = 1e-10, #to avoid dividing by 0 in the GEA integrals.
         basis: str = "aug-cc-pvqz",
     ):
+        """A class that runs a RHF calculation using pyscf and extracts all the important quantities from it.
+
+        Args:
+            atom (str, optional): The atom, molecule or complex stored in a .xyz file. Defaults to "".
+            charge (int, optional): The charge of the atom, molecule or complex. Defaults to 0.
+            spin (int, optional): The spin of the atom, molecule or complex.  Defaults to 0.
+            rho_trunc (float, optional): The truncation threshold on the density for integration. Defaults to 1e-10.
+
+        Raises:
+            ValueError: gives an error when input other than a .xyz file is given to atom.
+        """
         if atom == "":
             raise ValueError("m.xyz file must be given")
         self.mol=atom
@@ -32,7 +42,18 @@ class run_pyscf():
         self.nocc = nel//2  #number of occupied orbitals
 
     def run_mol(self, chkfile_name: str = "", chkfile_dir: str =""):
-        '''performing the HF SCF calculations or loading the chkfile'''
+        """Performs the HF SCF calculations or loads the chkfile if the calculations has already been run.
+
+        Args:
+            chkfile_name (str, optional): the name of the chkfile that either will be used to store the calculation or already contains a finished RHF SCF calculation. Defaults to "".
+            chkfile_dir (str, optional): the directory that contains said chkfile. Defaults to "".
+
+        Raises:
+            ValueError: gives an error if no chkfile has been given as input.
+
+        Returns:
+            ndarray,float,ndarray,ndarray,ndarray,ndarray,float,float: outputs a 2d array containing the one particle density matrix, the HF energy, 1d array with the HF orbital energies, 2d array with the orbital coefficients, 1d array containing the grid, 1d array containing the integration weights, the Hartree Energy and Exchange Energy.
+        """
         mf = dft.RKS(self.mol).density_fit()
         mf.xc='HF' #do RKS, but xc functional is 100% HF
         mf.grids.level = 4 #highest level of grids is 9; seems too large
@@ -65,6 +86,15 @@ class run_pyscf():
         return self.dm, self.ehf, self.e, self.mo_coeff, self.coords, self.weights, self.U, self.Ex
 
     def run_eris(self, chkfile_name: str = "", chkfile_dir: str =""):
+        """calculates the four orbital integrals and the LDA and GEA integrals of W_{c,\infty} and W_{1/2}. 
+
+        Args:
+            chkfile_name (str, optional): the name of the chkfile that either will be used to store the calculation or already contains a finished RHF SCF calculation. Defaults to "".
+            chkfile_dir (str, optional): the directory that contains said chkfile. Defaults to "".
+
+        Returns:
+            list,list: outputs a list containing the HF energy, Hartree energy, Exchange energy, LDA integral W_{c,\infty}, GEA integral W_{c,\infty}, LDA integral W_{1/2} and GEA integral W_{1/2} and a list containing the number of occupied orbitals, HF orbital energies and the 4 orbital integrals.
+        """
         self.chkfile_name=chkfile_name
         self.chkfile_dir=chkfile_dir
         dm, ehf, e, mo_coeff, coords, weights, Uh, Ex = self.run_mol(self.chkfile_name,self.chkfile_dir) #run the HF calculations
