@@ -1,12 +1,15 @@
 """
-a file containing constants
+A file containing constants and dictionary containing the parameters of the MP AC functionals
 """
 
-A = -1.451
-B = 5.317e-3
-kcal = 627.51
+A = -1.451 #The constant in front of the LDA integral coming from the PC Model.
+B = 5.317e-3 #the constant in front of the GEA integral coming from the PC Model
+kcal = 627.51 #@
 
 params={
+    ###A dictionary containing the parameters of all the different MP AC functionals.
+    ###The key is build as follows, the 1st argument is to turn on the \kappa regularizer, the 2nd turn on opposite-spin scaling, the 3rd to set k_ss=k_os and the last one the name of the MP AC functional.
+    ###The value contains the list of parameters with and the name of the MP AC functional
     (True,False,True,"spl2"): [[-0.433, 5.775,1.843,-1.750,1.7,1.7],"k-SPL2"],
     (True,False,True,"f1"): [[-0.3660,0.4677,1,1,1.3,1.3],"k-F1"],
     (True,False,True,"f1ab"): [[1.147,-0.6191,2.279,-4.989,1.5,1.5], "k-F1ab"],
