@@ -8,7 +8,6 @@ import numpy as np
 from tempfile import NamedTemporaryFile
 from pyscf import gto, ao2mo, dft
 
-
 class run_pyscf():
 
     def __init__(
