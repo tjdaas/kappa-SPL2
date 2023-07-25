@@ -6,10 +6,26 @@ from .constants_all import A,B
 
 class MPAC_functionals:
     def __init__(self,Ex,rho_4_3,gea_4_3):
+        """defining the 3 different MP AC functionals that currently exist
+
+        Args:
+            Ex (float): the HF exchange energy
+            rho_4_3 (_type_): the LDA integral excluding the constant A_\infty
+            gea_4_3 (_type_): the GEA integral excluding the constant B_\infty
+        """
         self.w0=Ex
         self.pc=A*rho_4_3+B*gea_4_3
 
     def spl2(self,params,Ec_mp2):
+        """Defining the SPL2 functional
+
+        Args:
+            params (ndarray): 1d array constaining the parameters that minimize the S22 dataset.
+            Ec_mp2 (float): the MP2 correlation energy
+
+        Returns:
+            float: the SPL2 interaction correlation energy
+        """
         self.wd0=2*Ec_mp2
         b2,m2,alp,bet=params
         self.winf=alp*self.pc + bet*self.w0
@@ -17,6 +33,15 @@ class MPAC_functionals:
         return spl2_form
 
     def f1(self,params,Ec_mp2):
+        """Defining the F1 and MPACF1 functional
+
+        Args:
+            params (ndarray): 1d array constaining the parameters that minimize the S22 dataset.
+            Ec_mp2 (float): the MP2 correlation energy
+
+        Returns:
+            float: the F1 and MPACF1 interaction correlation energy
+        """
         self.wd0=2*Ec_mp2
         g,h,alp,bet=params
         self.winf=alp*self.pc + bet*self.w0
@@ -24,5 +49,14 @@ class MPAC_functionals:
         return f1_form
 
     def mp2(self,params,Ec_mp2):
+        """Defining the MP2 functional
+
+        Args:
+            params (ndarray): 1d array constaining the parameters that minimize the S22 dataset.
+            Ec_mp2 (float): the MP2 correlation energy
+
+        Returns:
+            float: the MP2 interaction correlation energy
+        """
         self.wd0=2*Ec_mp2
         return self.wd0/2
