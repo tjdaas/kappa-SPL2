@@ -3,8 +3,8 @@ A file containing constants and dictionary containing the parameters of the MP A
 """
 
 A = -1.451 #The constant in front of the LDA integral coming from the PC Model.
-B = 5.317e-3 #the constant in front of the GEA integral coming from the PC Model
-kcal = 627.51 #@
+B = 5.317e-3 #The constant in front of the GEA integral coming from the PC Model.
+kcal = 627.51 #The conversion factor from Hartree to kcal/mol.
 
 params={
     ###A dictionary containing the parameters of all the different MP AC functionals.
