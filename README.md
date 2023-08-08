@@ -46,3 +46,23 @@ To solve any issue install openmp, then:
 ## References:
 1. K. J. Daas, D.P. Kooi, N.M. Peters, E. Fabiano, F. Della Sala, P. Gori-Giorgi, S. Vuckovic, Regularized and scaled Opposite-spin Functionals in Møller-Plesset Adiabatic Connection: Higher Accuracy at a Lower Cost, Arxiv 2023 https://doi.org/10.48550/arXiv.2307.02715
 
+## License
+MIT License
+Copyright (c) 2023 Kimberly J. Daas, Derk P. Kooi, Stefan Vuckovic
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECT
