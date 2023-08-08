@@ -41,7 +41,6 @@ To solve any issue install openmp, then:
 
 ## Future implementations:
 1. add optimization scheme on S22 to allow all combinations of \kappa's, spin scaling and mpac functionals.
-2. write docstrings for all of the functions.
 
 ## References:
 1. K. J. Daas, D.P. Kooi, N.M. Peters, E. Fabiano, F. Della Sala, P. Gori-Giorgi, S. Vuckovic, Regularized and scaled Opposite-spin Functionals in Møller-Plesset Adiabatic Connection: Higher Accuracy at a Lower Cost, Arxiv 2023 https://doi.org/10.48550/arXiv.2307.02715
